@@ -1,0 +1,21 @@
+# Nombre de tu app en Fly.io (debe ser único globalmente, cámbialo si ya existe)
+app = "bove-4g-server"
+primary_region = "gru"  # São Paulo — el más cercano a Argentina
+
+[build]
+
+# La máquina NO debe apagarse: es un servidor UDP persistente
+[machines]
+  auto_stop = false
+
+[[services]]
+  protocol = "udp"
+  internal_port = 16680
+
+  [[services.ports]]
+    port = 16680
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
