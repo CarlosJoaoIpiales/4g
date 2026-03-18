@@ -1,0 +1,6 @@
+services:
+  udp-server:
+    build: .
+    restart: always
+    ports:
+      - "16680:16680/udp"
