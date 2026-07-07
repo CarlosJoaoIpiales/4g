@@ -263,6 +263,16 @@ def run_udp_server(host: str = HOST, port: int = PORT) -> None:
         remote = f"{addr[0]}:{addr[1]}"
         log("INFO", f"Paquete recibido | from={remote} bytes={len(data)} hex={bytes_to_hex(data)}")
 
+        # Log RAW del paquete recibido.
+        # Útil para depurar exactamente qué está llegando por UDP antes de decodificar.
+        raw_hex_spaced = " ".join(f"{byte:02X}" for byte in data)
+        raw_bytes_repr = repr(data)
+        raw_text_utf8 = data.decode("utf-8", errors="replace")
+
+        log("RAW", f"from={remote} raw_bytes={raw_bytes_repr}")
+        log("RAW", f"from={remote} raw_hex_spaced={raw_hex_spaced}")
+        log("RAW", f"from={remote} raw_text_utf8={raw_text_utf8!r}")
+
         try:
             decoded = parse_bove_4g_frame(data)
             log("OK", f"Trama decodificada | from={remote} imei={decoded.get('imei_14')} "
